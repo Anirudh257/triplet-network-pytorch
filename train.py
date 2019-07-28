@@ -152,9 +152,9 @@ def train(train_loader, tnet, criterion, optimizer, epoch):
 
         # measure accuracy and record loss
         acc = accuracy(dista, distb)
-        losses.update(loss_triplet.data[0], data1.size(0))
+        losses.update(loss_triplet.data, data1.size(0))
         accs.update(acc, data1.size(0))
-        emb_norms.update(loss_embedd.data[0]/3, data1.size(0))
+        emb_norms.update(loss_embedd.data/3, data1.size(0))
 
         # compute gradient and do optimizer step
         optimizer.zero_grad()
@@ -191,7 +191,7 @@ def test(test_loader, tnet, criterion, epoch):
         if args.cuda:
             target = target.cuda()
         target = Variable(target)
-        test_loss =  criterion(dista, distb, target).data[0]
+        test_loss =  criterion(dista, distb, target).data
 
         # measure accuracy and record loss
         acc = accuracy(dista, distb)
